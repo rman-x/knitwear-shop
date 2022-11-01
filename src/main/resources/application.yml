@@ -1,12 +1,10 @@
 server:
   address: 'localhost'
-  port: 8080
+  port: ${PORT}
 
 spring:
   datasource:
-    url: jdbc:postgresql://surus.db.elephantsql.com/uubbppnl
-    username: uubbppnl
-    password: AqbA6BHibapmMl2imoqFufCIPt0lstwt
+    url: ${DATABASE_URL}
   jpa:
     hibernate:
       ddl-auto: update
