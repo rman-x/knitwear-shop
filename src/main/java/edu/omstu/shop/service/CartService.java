@@ -16,4 +16,12 @@ public class CartService {
     public List<CartItem> findAll() {
         return repository.findAll();
     }
+
+    public CartItem save(CartItem item) {
+        return repository.save(item);
+    }
+
+    public void remove(Long id) {
+        repository.removeById(id);
+    }
 }
