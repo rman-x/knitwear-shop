@@ -1,0 +1,18 @@
+server:
+  address: 'localhost'
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://surus.db.elephantsql.com/uubbppnl
+    username: uubbppnl
+    password: AqbA6BHibapmMl2imoqFufCIPt0lstwt
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+    show-sql: true
+  
+  sql: 
+    init.mode: always

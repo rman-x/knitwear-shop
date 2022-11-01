@@ -1,0 +1,1 @@
+INSERT INTO items (title, price, image_url) VALUES ('Плюшевый мишка', 100, 'img/items/1.svg');
