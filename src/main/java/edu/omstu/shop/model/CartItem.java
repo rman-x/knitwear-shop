@@ -48,7 +48,6 @@ public class CartItem {
     public String getImageUrl() {
         return item.getImageUrl();
     }
-    
 
     public CartItem(Long parentId) {
         this.parentId = parentId;
