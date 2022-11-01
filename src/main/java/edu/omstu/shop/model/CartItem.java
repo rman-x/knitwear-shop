@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,10 +28,26 @@ public class CartItem {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
+    @JsonIgnore
     private Item item;
     
     @Column(name = "parent_id", insertable = false, updatable = false)
     private Long parentId;
+
+    @Column(name = "title")
+    public String getTitle() {
+        return item.getTitle();
+    }
+
+    @Column(name = "price")
+    public Integer getPrice() {
+        return item.getPrice();
+    }
+
+    @Column(name = "image_url")
+    public String getImageUrl() {
+        return item.getImageUrl();
+    }
     
 
     public CartItem(Long parentId) {
