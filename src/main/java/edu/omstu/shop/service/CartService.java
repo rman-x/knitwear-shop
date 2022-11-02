@@ -21,7 +21,7 @@ public class CartService {
         return repository.save(item);
     }
 
-    public void remove(Long id) {
-        repository.removeById(id);
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 }
