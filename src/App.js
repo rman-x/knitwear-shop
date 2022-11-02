@@ -10,7 +10,6 @@ import Home from "./pages/Home";
 function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
-  const [favorites, setFavorites] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState("");
   const [cartOpened, setCartOpened] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -18,19 +17,15 @@ function App() {
   React.useEffect(() => {
     async function fetchData() {
       try {
-        const [cartResponse, favoritesResponse, itemsResponse] =
-          await Promise.all([
-            axios.get("https://60d62397943aa60017768e77.mockapi.io/cart"),
-            axios.get("https://60d62397943aa60017768e77.mockapi.io/favorites"),
-            axios.get("https://60d62397943aa60017768e77.mockapi.io/items"),
-          ]);
+        const [cartResponse, itemsResponse] = await Promise.all([
+          axios.get("https://knitwear-shop-backend.herokuapp.com/cart"),
+          axios.get("https://knitwear-shop-backend.herokuapp.com/items"),
+        ]);
 
         setIsLoading(false);
         setCartItems(cartResponse.data);
-        setFavorites(favoritesResponse.data);
         setItems(itemsResponse.data);
       } catch (error) {
-        alert("Ошибка при запросе данных ;(");
         console.error(error);
       }
     }
@@ -48,12 +43,12 @@ function App() {
           prev.filter((item) => Number(item.parentId) !== Number(obj.id))
         );
         await axios.delete(
-          `https://60d62397943aa60017768e77.mockapi.io/cart/${findItem.id}`
+          `https://knitwear-shop-backend.herokuapp.com/cart/${findItem.id}`
         );
       } else {
         setCartItems((prev) => [...prev, obj]);
         const { data } = await axios.post(
-          "https://60d62397943aa60017768e77.mockapi.io/cart",
+          "https://knitwear-shop-backend.herokuapp.com/cart",
           obj
         );
         setCartItems((prev) =>
@@ -69,41 +64,18 @@ function App() {
         );
       }
     } catch (error) {
-      alert("Ошибка при добавлении в корзину");
       console.error(error);
     }
   };
 
   const onRemoveItem = (id) => {
     try {
-      axios.delete(`https://60d62397943aa60017768e77.mockapi.io/cart/${id}`);
+      axios.delete(`https://knitwear-shop-backend.herokuapp.com/cart/${id}`);
       setCartItems((prev) =>
         prev.filter((item) => Number(item.id) !== Number(id))
       );
     } catch (error) {
       alert("Ошибка при удалении из корзины");
-      console.error(error);
-    }
-  };
-
-  const onAddToFavorite = async (obj) => {
-    try {
-      if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
-        axios.delete(
-          `https://60d62397943aa60017768e77.mockapi.io/favorites/${obj.id}`
-        );
-        setFavorites((prev) =>
-          prev.filter((item) => Number(item.id) !== Number(obj.id))
-        );
-      } else {
-        const { data } = await axios.post(
-          "https://60d62397943aa60017768e77.mockapi.io/favorites",
-          obj
-        );
-        setFavorites((prev) => [...prev, data]);
-      }
-    } catch (error) {
-      alert("Не удалось добавить в фавориты");
       console.error(error);
     }
   };
@@ -121,9 +93,7 @@ function App() {
       value={{
         items,
         cartItems,
-        favorites,
         isItemAdded,
-        onAddToFavorite,
         onAddToCart,
         setCartOpened,
         setCartItems,
@@ -146,7 +116,6 @@ function App() {
             searchValue={searchValue}
             setSearchValue={setSearchValue}
             onChangeSearchInput={onChangeSearchInput}
-            onAddToFavorite={onAddToFavorite}
             onAddToCart={onAddToCart}
             isLoading={isLoading}
           />
