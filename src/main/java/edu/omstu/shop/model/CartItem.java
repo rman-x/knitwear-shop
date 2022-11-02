@@ -34,28 +34,19 @@ public class CartItem {
     @Column(name = "parent_id", insertable = false, updatable = false)
     private Long parentId;
 
-    @Column(name = "title", nullable = true)
-    public String getTitle() {
-        if (item != null) { 
-            return item.getTitle();
-        } return null;
-    }
+    @Column(name = "title")
+    public String title;
 
-    @Column(name = "price", nullable = true)
-    public Integer getPrice() {
-        if (item != null) { 
-        return item.getPrice();
-        } return null;
-    }
+    @Column(name = "price")
+    public Integer price;
 
     @Column(name = "image_url", nullable = true)
-    public String getImageUrl() {
-        if (item != null) {
-        return item.getImageUrl();
-        } return null;
-    }
+    public String imageUrl;
 
-    public CartItem(Long parentId) {
+    public CartItem(Long parentId, String title, Integer price, String imageUrl) {
         this.parentId = parentId;
+        this.title = title;
+        this.price = price;
+        this.imageUrl = imageUrl;
     }
 }
